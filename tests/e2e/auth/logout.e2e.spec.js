@@ -1,20 +1,18 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../pages/LoginPage";
 import { DashboardPage } from "../../pages/DashboardPage";
-import users from "../../fixtures/users.json";
+import { loginAsValidUser } from "../../utils/login.helper.js";
 
 test.describe("Logout E2E", () => {
   test("User Succesfully Logout", async ({ page }) => {
-    const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
-    const userValid = users.validUser;
+    const loginPage = new LoginPage(page);
 
-    await test.step("User already in Dashboard Page", async () => {
-      await loginPage.goto();
-      await loginPage.login(userValid.username, userValid.password);
+    await test.step("User can login successfully", async () => {
+      await loginAsValidUser(page);
       await expect(page).toHaveURL(/dashboard/);
       await expect(
-        page.getByRole("heading", { name: "Dashboard" })
+        page.getByRole("heading", { name: "Dashboard" }),
       ).toBeVisible();
     });
 

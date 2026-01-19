@@ -3,6 +3,7 @@ export class DashboardPage {
     this.page = page;
     this.userDropdown = page.locator(".oxd-userdropdown-tab");
     this.logoutOption = page.getByText("Logout");
+    this.changePasswordOption = page.getByText("Change Password");
   }
 
   async clickUserDropdown() {
@@ -11,5 +12,9 @@ export class DashboardPage {
 
   async clickLogout() {
     await this.logoutOption.click();
+  }
+
+  async clickChangePassword() {
+    await this.changePasswordOption.click();
   }
 }

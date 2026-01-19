@@ -59,6 +59,8 @@ tests/
  │
  ├── fixtures/            # Test data (JSON files)
  │   └── users.json
+ └── utils/               # Reusable helpers
+     └── login.helper.js
 
 playwright.config.js
 README.md
@@ -66,9 +68,10 @@ README.md
 
 📌 Folder Description
 
-- e2e/ → Real user end-to-end flows
-- pages/ → Page Object Model (locators & actions only)
-- fixtures/ → Test data (users, roles, credentials)
+- `e2e/` → Real user end-to-end flows
+- `pages/` → Page Object Model (locators & actions only)
+- `fixtures/` → Test data (users, roles, credentials)
+- `utils/` -> Shared helpers (login, setup, etc.)
 
 ## ▶️ Running Tests
 
