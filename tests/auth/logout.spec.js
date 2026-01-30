@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../../pages/LoginPage";
-import { DashboardPage } from "../../pages/DashboardPage";
-import { loginAsValidUser } from "../../utils/login.helper.js";
+import { LoginPage } from "../pages/LoginPage.js";
+import { DashboardPage } from "../pages/DashboardPage.js";
+import { loginAsValidUser } from "../utils/login.helper.js";
 
 test.describe("Logout E2E", () => {
   test("User Succesfully Logout", async ({ page }) => {

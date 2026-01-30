@@ -39,26 +39,81 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    // 🔑 LOGIN SETUP
     {
-      name: "chromium",
+      name: "setup",
+      testMatch: /.*\.setup\.js/,
+    },
+
+    // 💻 E2E TESTS
+    {
+      name: "chromium-e2e",
+      testDir: "./tests/e2e",
+      dependencies: ["setup"],
       use: {
         viewport: null,
         launchOptions: {
           args: ["--start-maximized"],
         },
+        browserName: "chromium",
+        storageState: "storage/auth.json",
       },
     },
 
     {
-      name: "firefox",
+      name: "firefox-e2e",
+      testDir: "./tests/e2e",
+      dependencies: ["setup"],
       use: {
         viewport: { width: 1920, height: 1080 },
+        browserName: "firefox",
+        storageState: "storage/auth.json",
       },
     },
 
     {
-      name: "webkit",
-      use: { viewport: { width: 1920, height: 1080 } },
+      name: "webkit-e2e",
+      testDir: "./tests/e2e",
+      dependencies: ["setup"],
+      use: {
+        viewport: { width: 1920, height: 1080 },
+        browserName: "webkit",
+        storageState: "storage/auth.json",
+      },
+    },
+
+    // 💻 AUTH TESTS
+    {
+      name: "chromium-auth",
+      testDir: "./tests/auth",
+      use: {
+        viewport: null,
+        launchOptions: {
+          args: ["--start-maximized"],
+        },
+        browserName: "chromium",
+        storageState: undefined,
+      },
+    },
+
+    {
+      name: "firefox-auth",
+      testDir: "./tests/auth",
+      use: {
+        viewport: { width: 1920, height: 1080 },
+        browserName: "firefox",
+        storageState: undefined,
+      },
+    },
+
+    {
+      name: "webkit-auth",
+      testDir: "./tests/auth",
+      use: {
+        viewport: { width: 1920, height: 1080 },
+        browserName: "webkit",
+        storageState: undefined,
+      },
     },
 
     /* Test against mobile viewports. */

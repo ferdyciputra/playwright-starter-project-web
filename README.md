@@ -49,17 +49,22 @@ npx playwright install
 
 ```txt
 tests/
- ├── e2e/                 # End-to-End test scenarios (user journeys)
- │   ├── auth/
- │       └── login.e2e.spec.js
+ ├── setup/
+ │   └─ login.setup.js           # Generate storage state (login once)
+ |
+ ├── auth/                      # ❌ NO storage state support
+ │   └── login.spec.js
+ |
+ ├── e2e/                       # ✅ Uses storage state
+ │   └── change-password.spec.js
  │
- ├── pages/               # Page Object Model (locators & actions)
+ ├── pages/                     # Page Object Model (locators & actions)
  │   ├── LoginPage.js
  │   └── DashboardPage.js
  │
- ├── fixtures/            # Test data (JSON files)
+ ├── fixtures/                  # Test data (JSON files)
  │   └── users.json
- └── utils/               # Reusable helpers
+ └── utils/                     # Reusable helpers
      └── login.helper.js
 
 playwright.config.js
@@ -69,9 +74,23 @@ README.md
 📌 Folder Description
 
 - `e2e/` → Real user end-to-end flows
+- `auth/` → Testcase user authentication flows
+- `setup/` → Generate storage state (login once)
 - `pages/` → Page Object Model (locators & actions only)
 - `fixtures/` → Test data (users, roles, credentials)
 - `utils/` -> Shared helpers (login, setup, etc.)
+
+## 🔄 Test Execution Flow
+
+```txt
+setup
+↓
+generate storage/auth.json
+↓
+auth tests (manual login only)
+↓
+e2e tests (auto login via storage state)
+```
 
 ## ▶️ Running Tests
 
@@ -115,12 +134,29 @@ UI Mode features:
 
 📌 Note: UI Mode always runs in non-headless mode
 
-### 4️⃣ Run Tests on a Specific Browser
+### 4️⃣ Run Tests on a Specific Configuration Browser
 
-There is 3 value for valid browser `chromium`, `firefox`, and `webkit`
+There is 3 value for End to End Test folder `tests/e2e` `chromium-e2e`, `firefox-e2e`, and `webkit-e2e`
+This configuration automatically use storageState session
+
+With storage state:
+
+1. Login happens once
+2. All E2E tests reuse the same session
+3. Tests run 5–10× faster
+4. Tests are more stable and CI-friendly
 
 ```bash
-npx playwright test --project=chromium
+npx playwright test --project=chromium-e2e
+```
+
+or
+
+There is 3 value for Authentication Test folder `tests/auth` `chromium-auth`, `firefox-auth`, and `webkit-auth`
+This configuration not use storageState session
+
+```bash
+npx playwright test --project=chromium-auth
 ```
 
 ### 5️⃣ Run a Specific Test File

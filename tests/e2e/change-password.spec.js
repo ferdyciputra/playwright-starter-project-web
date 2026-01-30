@@ -1,16 +1,15 @@
 import { test, expect } from "@playwright/test";
-import { DashboardPage } from "../../pages/DashboardPage";
-import { ChangePasswordPage } from "../../pages/ChangePasswordPage";
-import { loginAsValidUser } from "../../utils/login.helper.js";
-import users from "../../fixtures/users.json";
+import { DashboardPage } from "../pages/DashboardPage.js";
+import { ChangePasswordPage } from "../pages/ChangePasswordPage.js";
+import users from "../fixtures/users.json";
 
 test.describe("Change Password E2E", () => {
   test("User Successfully Changes Password", async ({ page }) => {
     const dashboardPage = new DashboardPage(page);
     const changePasswordPage = new ChangePasswordPage(page);
 
-    await test.step("User can login successfully", async () => {
-      await loginAsValidUser(page);
+    await test.step("User open Dashboard page", async () => {
+      dashboardPage.goto();
       await expect(page).toHaveURL(/dashboard/);
       await expect(
         page.getByRole("heading", { name: "Dashboard" }),

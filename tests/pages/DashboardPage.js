@@ -6,6 +6,10 @@ export class DashboardPage {
     this.changePasswordOption = page.getByText("Change Password");
   }
 
+  async goto() {
+    await this.page.goto("/web/index.php/dashboard/index");
+  }
+
   async clickUserDropdown() {
     await this.userDropdown.click();
   }

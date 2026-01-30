@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../../pages/LoginPage";
-import users from "../../fixtures/users.json";
+import { LoginPage } from "../pages/LoginPage";
+import users from "../fixtures/users.json";
 
 test.describe("Login E2E", () => {
   test("User Succesfully Login", async ({ page }) => {
@@ -18,7 +18,7 @@ test.describe("Login E2E", () => {
     await test.step("User successfully login and can see dashboard menu", async () => {
       await expect(page).toHaveURL(/dashboard/);
       await expect(
-        page.getByRole("heading", { name: "Dashboard" })
+        page.getByRole("heading", { name: "Dashboard" }),
       ).toBeVisible();
     });
   });
